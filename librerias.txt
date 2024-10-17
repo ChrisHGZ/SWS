@@ -1,0 +1,128 @@
+npm install qrious --save
+
+Opción 2: Crear una declaración de módulo
+Crea un archivo de declaración de tipos:
+
+Puedes crear un archivo llamado qrious.d.ts en tu proyecto para declarar el módulo. Sigue estos pasos:
+
+Crea una carpeta llamada @types en la raíz de tu proyecto (si no existe).
+Dentro de @types, crea un archivo llamado qrious.d.ts.
+
+El contenido del archivo debe ser:
+typescript
+
+declare module 'qrious' {
+  export default class QRious {
+    constructor(options?: {
+      element?: HTMLCanvasElement;
+      value?: string;
+      size?: number;
+      level?: 'L' | 'M' | 'Q' | 'H';
+    });
+  }
+}
+
+Configura TypeScript para incluir el directorio de tipos:
+Asegúrate de que tu archivo tsconfig.json tenga la siguiente opción para incluir el directorio de tipos:
+
+json
+
+{
+  "compilerOptions": {
+    "typeRoots": [
+      "node_modules/@types",
+      "src/@types" // Asegúrate de incluir esta línea
+    ],
+    // otras configuraciones...
+  }
+}
+
+1. Instalar el plugin
+https://ionicframework.com/docs/native/setup
+Ejecuta los siguientes comandos para instalar el plugin y sincronizarlo con tu proyecto:
+# Install the Capacitor Plugins
+$ npm install @capacitor/camera
+
+2. Configurar el plugin
+Después de instalar, necesitas configurar algunos permisos para la cámara:
+Para Android: Asegúrate de que AndroidManifest.xml tenga los permisos necesarios:
+<uses-permission android:name="android.permission.CAMERA" />
+
+3. Implementar el escáner QR en tu componente
+En el archivo .ts (por ejemplo, alumno.component.ts), agrega la lógica para escanear el QR:
+
+Component({
+  selector: 'app-alumno',
+  templateUrl: './alumno.component.html',
+})
+export class AlumnoComponent {
+
+  public imageSrc: string | undefined = '';
+
+  async takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    const imageUrl = image.webPath;
+    this.imageSrc = imageUrl;
+  };
+
+}
+
+-------------------------------------------------
+
+0.
+Cache y Archivos Residuales: A veces, el problema puede ser causado por un problema
+de caché o archivos residuales en la aplicación.
+Intenta limpiar la caché y reinstalar la aplicación:
+
+ionic capacitor clean
+npm cache clean --force
+
+-------------------------------------------------
+
+1.
+https://capacitorjs.com/docs/android
+
+First, install the @capacitor/android package.
+npm install @capacitor/android
+
+-------------------------------------------------
+
+2.
+COMPILAR EL PROYECTO:
+ionic build --prod
+
+Then, add the Android platform.
+npx cap add android
+
+luego para abrir el proyectn en android
+npx cap open android
+
+-------------------------------------------------
+
+3.
+en caso de problemas de visualizaion:
+ionic build
+npx cap sync
+
+-------------------------------------------------
+
+4.
+opcionales:
+
+en caso de modificador
+npx cap copy android
+
+en caso de agregar plugin
+npx cap sync android
+
+-------------------------------------------------
+
+5.
+Inspección del Error: Utiliza Chrome DevTools para inspeccionar la aplicación
+mientras se ejecuta en un dispositivo físico o emulador. Para ello,
+abre chrome://inspect en tu navegador Chrome y
+selecciona tu dispositivo para ver posibles errores de consola o estilos no cargados.
